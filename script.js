@@ -59,57 +59,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen for scroll
     window.addEventListener('scroll', checkFade);
 
-    // Form Submission (Integrado com FormSubmit)
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('.btn-enviar');
-            const originalText = btn.innerText;
-            
-            btn.innerText = 'Enviando...';
-            btn.style.opacity = '0.8';
-            btn.disabled = true;
-            
-            const formData = new FormData(contactForm);
-            
-            fetch('https://formsubmit.co/ajax/halineadvocacia@gmail.com', {
-                method: 'POST',
-                headers: { 
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    btn.innerText = 'Mensagem Enviada com Sucesso!';
-                    btn.style.backgroundColor = '#25D366'; // Cor de sucesso (verde)
-                    btn.style.color = 'white';
-                    contactForm.reset();
-                    
-                    setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.style.backgroundColor = '';
-                        btn.style.color = '';
-                        btn.style.opacity = '1';
-                        btn.disabled = false;
-                    }, 4000);
-                } else {
-                    throw new Error('Falha na API');
-                }
-            })
-            .catch(error => {
-                btn.innerText = 'Erro. Tente via WhatsApp!';
-                btn.style.backgroundColor = '#6C1F2B'; // Cor de erro (wine)
-                
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = '';
-                    btn.style.opacity = '1';
-                    btn.disabled = false;
-                }, 4000);
-            });
-        });
-    }
+
 });
