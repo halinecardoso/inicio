@@ -262,8 +262,9 @@ section {
 }
 
 .card {
-    width: 100%;
-    max-width: 350px; /* Em telas grandes, cabem 3 (3x350 = 1050px) e sobram 2 que ficam centralizados embaixo */
+    flex: 0 0 calc(33.333% - 20px); /* Força matematicamente a exibição de 3 por linha (descontando o espaço do gap) */
+    min-width: 300px; /* Garante que não fiquem finos demais, quebrando para 2 ou 1 por linha em telas menores */
+    max-width: 380px; /* Limite de tamanho */
     background-color: var(--white);
     padding: 50px 40px;
     border-radius: 20px;
