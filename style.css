@@ -253,14 +253,17 @@ section {
 }
 
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .card {
+    width: 100%;
+    max-width: 350px; /* Em telas grandes, cabem 3 (3x350 = 1050px) e sobram 2 que ficam centralizados embaixo */
     background-color: var(--white);
     padding: 50px 40px;
     border-radius: 20px;
