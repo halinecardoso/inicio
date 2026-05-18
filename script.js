@@ -59,5 +59,47 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen for scroll
     window.addEventListener('scroll', checkFade);
 
-
+    // Form Submission -> Redirecionamento Inteligente para WhatsApp
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Impede o recarregamento da página
+            
+            const btn = contactForm.querySelector('.btn-enviar');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Conectando...';
+            btn.style.opacity = '0.8';
+            
+            // Captura os dados
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const mensagem = document.getElementById('mensagem').value;
+            
+            // Monta o texto bonitinho pro WhatsApp
+            const textoWhatsApp = `Olá, Dra. Haline!\n\nMeu nome é *${nome}*.\nMeu e-mail de contato é: ${email}\n\n*Minha dúvida/mensagem:*\n${mensagem}`;
+            const numeroWhatsApp = "5562994184276";
+            
+            // Cria o link
+            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWhatsApp)}`;
+            
+            // Pequeno delay pra dar o efeito visual de carregamento
+            setTimeout(() => {
+                window.open(url, '_blank'); // Abre o whats
+                
+                // Feedback visual de sucesso
+                btn.innerText = 'Enviado!';
+                btn.style.backgroundColor = '#25D366';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.opacity = '1';
+                    contactForm.reset();
+                }, 3000);
+            }, 800);
+        });
+    }
 });
