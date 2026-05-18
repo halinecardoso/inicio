@@ -86,9 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.color = 'white';
                     contactForm.reset();
                     
-                    // Atualiza a página após 2,5 segundos
+                    // Rola a página para o topo após 2,5 segundos
                     setTimeout(() => {
-                        window.location.reload();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        
+                        // Restaura o botão para o estado inicial para futuros envios
+                        setTimeout(() => {
+                            btn.innerText = 'Enviar Mensagem';
+                            btn.style.backgroundColor = '';
+                            btn.style.color = '';
+                            btn.style.opacity = '1';
+                            btn.disabled = false;
+                        }, 800);
                     }, 2500);
                 } else {
                     throw new Error('Falha no envio');
