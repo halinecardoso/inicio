@@ -615,4 +615,8 @@ footer {
     .sobre-container {
         padding: 30px 20px;
     }
+    
+    .contato-form {
+        padding: 30px 20px; /* Reduz a borda interna vazia no celular, alargando os campos */
+    }
 }
