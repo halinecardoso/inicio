@@ -59,5 +59,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen for scroll
     window.addEventListener('scroll', checkFade);
 
-
+    // Form Submission Silencioso (AJAX) - Formspree
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Impede o redirecionamento da página
+            const btn = contactForm.querySelector('.btn-enviar');
+            
+            btn.innerText = 'Enviando...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+            
+            const formData = new FormData(contactForm);
+            
+            fetch('https://formspree.io/f/xbdblozd', {
+                method: 'POST',
+                headers: { 
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    btn.innerText = 'Mensagem Enviada!';
+                    btn.style.backgroundColor = '#25D366'; // Cor de sucesso (verde)
+                    btn.style.color = 'white';
+                    contactForm.reset();
+                    
+                    // Atualiza a página após 2,5 segundos
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
+                } else {
+                    throw new Error('Falha no envio');
+                }
+            })
+            .catch(error => {
+                btn.innerText = 'Erro. Tente novamente.';
+                btn.style.backgroundColor = '#6C1F2B';
+                
+                setTimeout(() => {
+                    btn.innerText = 'Enviar Mensagem';
+                    btn.style.backgroundColor = '';
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                }, 3000);
+            });
+        });
+    }
 });
